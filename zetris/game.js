@@ -33,6 +33,22 @@ const main = () => {
 	
 	}
 	const startGame = () => {
+
+		let columns = new Array(10).fill(new Array(21).fill(0, 0, 20), 0, 9)
+		let movingBlocks = []
+
+		const render = () => {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			//TODO: make this only part of the screen but for now the whole thing can be used
+			for (let column in columns) {
+				for (let row in columns[column]) {
+					if (columns[column][row]) {
+						ctx.fillRect(column * 20, row * 20, 20, 20);
+					}
+				}
+			}
+		}
+
 		const pause = () => {
 
 		}
@@ -44,25 +60,61 @@ const main = () => {
 				if (block > 1) {
 					if(newBlock[block]) {
 						columns[Math.floor(bWidth / width + block - 2)][Math.floor((block - 2) / height)]
+						movingBlocks.push(new Coordinate(Math.floor(bWidth / width + block - 2), Math.floor((block - 2) / height)))
 					}
 				}
 			}
 		}
+		const doLines = () => {
+			//clearing lines and doing scores
+		}
 		const freezeBlocks = () => {
+			movingBlocks = [];
+			doLines();
 			newBlock();
 		}
 		const rotate = () => {
-
+			render();
 		}
-		const gameTick = () => {
+		const collisionDetector = (dir) => {
+			//0 = down
+			//1 = left
+			//2 = right
+			//uhhh make switch
+			switch (dir) {
+				case 0:
+					for (let coordinate in movingBlocks) {
+						//if coord below is not moving and filled return true
+					}
+					return false
+				case 1:
+					return false
+				case 2:
+					return false
+			}
+		}
+		const gameTick = (detected) => {
+			if (collisionDetector(0)) { //if not collide
 
+			} else {
+				freezeBlocks()
+			}
+			render();
+		}
+		const horizontalMove = (dir) => {
+			//dir = true is right, false is left
+			if (dir) {
+
+			} else {
+
+			}
 		}
 		const endGame = () => {
 
 		}
 
-		let columns = new Array(10).fill(new Array(21).fill(0, 0, 20), 0, 9)
-		let movingBlocks = []
+		newBlock();
+		render();
 	}
 	startGame() //until menu is made
 }
