@@ -118,3 +118,6 @@ const main = () => {
 	}
 	startGame() //until menu is made
 }
+document.addEventListener("DOMContentLoaded", () => {
+	main()
+})
