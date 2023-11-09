@@ -23,18 +23,25 @@ const blocks = [ //block notation: width, height, t/f for each from top left to 
 	[3, 2, true, true, false, false, true, true],
 	[3, 2, false, true, false, true, true, true],
 ];
-
+let columns
 const main = () => {
 	let canvas = document.querySelector("#gameTarget");
 	let ctx = canvas.getContext("2d");
 	const bWidth = 10
 	const bHeight = 21
+
+	ctx.fillStyle = "green"
+
 	const menu = () => {
 	
 	}
 	const startGame = () => {
 
-		let columns = new Array(10).fill(new Array(21).fill(0, 0, 20), 0, 9)
+		//setup columns
+		columns = new Array(bWidth).fill(false,0,bWidth);
+		for (let column in columns) {
+			columns[column] = new Array(bHeight).fill(false,0,bHeight)
+		}
 		let movingBlocks = []
 
 		const render = () => {
@@ -53,17 +60,22 @@ const main = () => {
 
 		}
 		const newBlock = () => {
-			const newBlock = randomIndex[blocks];
+			const newBlock = randomIndex(blocks);
 			const width = newBlock[0];
 			const height = newBlock[1];
 			for (let block in newBlock) {
 				if (block > 1) {
-					if(newBlock[block]) {
-						columns[Math.floor(bWidth / width + block - 2)][Math.floor((block - 2) / height)]
+					if(newBlock[block]) {/*
+					ALGORITHM???
+					y: (block / width to floor
+					*/
+						let block2 = block - 2;
+						columns[block][block] = newBlock[block]; //TODO: figure out algorithm to place these
 						movingBlocks.push(new Coordinate(Math.floor(bWidth / width + block - 2), Math.floor((block - 2) / height)))
 					}
 				}
 			}
+			console.log(columns)
 		}
 		const doLines = () => {
 			//clearing lines and doing scores
